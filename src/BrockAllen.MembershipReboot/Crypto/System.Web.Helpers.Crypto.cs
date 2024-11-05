@@ -7,6 +7,7 @@
 // Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
 // Original License: http://www.apache.org/licenses/LICENSE-2.0
 
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
@@ -141,11 +142,13 @@ namespace BrockAllen.MembershipReboot.Helpers
             byte[] storedSubkey = new byte[PBKDF2SubkeyLength];
             Buffer.BlockCopy(hashedPasswordBytes, 1 + SaltSize, storedSubkey, 0, PBKDF2SubkeyLength);
 
-            byte[] generatedSubkey;
-            using (var deriveBytes = new Rfc2898DeriveBytes(password, salt, iterationCount))
-            {
-                generatedSubkey = deriveBytes.GetBytes(PBKDF2SubkeyLength);
-            }
+            byte[] generatedSubkey = KeyDerivation.Pbkdf2(password, salt, KeyDerivationPrf.HMACSHA1, iterationCount, PBKDF2SubkeyLength);
+
+            //byte[] generatedSubkey;
+            //using (var deriveBytes = new Rfc2898DeriveBytes(password, salt, iterationCount))
+            //{
+            //    generatedSubkey = deriveBytes.GetBytes(PBKDF2SubkeyLength);
+            //}
             return ByteArraysEqual(storedSubkey, generatedSubkey);
         }
 

@@ -167,3 +167,9 @@ pip-log.txt
 
 # SQL Lite DB files
 *.sqlite
+/src/.vs/BrockAllen.MembershipReboot
+/src/BrockAllen.MembershipReboot/.vs
+/src/BrockAllen.MembershipReboot.Ef/.vs
+/src/BrockAllen.MembershipReboot.Owin/.vs
+/src/BrockAllen.MembershipReboot.Test/.vs
+/src/BrockAllen.MembershipReboot.WebHost/.vs
